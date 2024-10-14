@@ -1,14 +1,15 @@
-// my-app/src/app/profil/[id]/page.tsx
-import Typography from '@mui/material/Typography';
+// src/app/profil/[id]/page.tsx
 
-export const metadata = {
-  title: "Detail profilu"
-}
+
+import Typography from "@mui/material/Typography";
+
+export const metadata = { title: "Detail profilu | ZoškaSnap" };
 
 export default function ProfileDetail() {
+
   return (
-     
-    <Typography> Detail profilu </Typography>
+
+      <Typography> Detail profilu </Typography>
 
   );
 }

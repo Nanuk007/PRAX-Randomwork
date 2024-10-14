@@ -1,12 +1,7 @@
-// my-app/src/app/auth/registracia/page.tsx
-import Typography from '@mui/material/Typography';
-
-export const metadata = {title: "Sign up"}
-
-export default function SignUp() {
+export default function Registracia() {
   return (
-     
-    <Typography> Registracia </Typography>
-
+    <div>
+      <h1>Registrácia</h1>
+    </div>
   );
-}
+} 

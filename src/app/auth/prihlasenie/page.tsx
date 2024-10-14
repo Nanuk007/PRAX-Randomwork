@@ -1,12 +1,7 @@
-// my-app/src/app/auth/prihlasenie/page.tsx
-import Typography from '@mui/material/Typography';
-
-export const metadata = {title: "Prihlasenie"}
-
-export default function Signin() {
+export default function Prihlasenie() {
   return (
-     
-    <Typography> Prihlasenie </Typography>
-
+    <div>
+      <h1>Prihlasenie</h1>
+    </div>
   );
 }
