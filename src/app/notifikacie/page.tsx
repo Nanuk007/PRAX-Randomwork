@@ -8,6 +8,7 @@ export const metadata = {
 export default function Notifications() {
   return (
      
+    
     <Typography> Notifikacie </Typography>
 
   );
