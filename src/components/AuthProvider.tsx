@@ -1,29 +1,14 @@
-'use client'
+// src/components/AuthProvider.tsx
 
-import { useSession } from "next-auth/react"
-import Button from '@mui/material/Button';
-import { signOut } from "next-auth/react"
+"use client";
 
-export default function AuthHomeView() {
-  const { data: session, status } = useSession()
+import React, { ReactNode } from 'react'
+import { SessionProvider } from 'next-auth/react'
 
-  if (status === "loading") {
-    return <div>Loading...</div>
-  }
-
-  if (status === "unauthenticated") {
-    return <div>Access Denied</div>
-  }
-
+const AuthProvider = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-3xl font-bold mb-4">
-        Ahoj, {session?.user?.name || 'User'}
-      </h1>
-      <p className="mb-4">You're signed in with Google.</p>
-      <Button onClick={() => signOut({ callbackUrl: '/' })}>
-        Odhlásiť sa
-      </Button>
-    </div>
+    <SessionProvider>{children}</SessionProvider>
   )
 }
+
+export default AuthProvider
