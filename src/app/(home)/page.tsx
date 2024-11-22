@@ -2,15 +2,18 @@
 
 
 import Typography from "@mui/material/Typography";
-
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/authOptions";
+import LoggedInHomeView from "@/sections/HomeViews/LoggedInHomeView";
+import NoLoginHomeView from "@/sections/HomeViews/NoLoginHomeView"
 export const metadata = { title: "Domov | ZoškaSnap" };
 
-export default function Home() {
-
+export default async function Home() {
+  const activeSession = await getServerSession(authOptions)
   return (
-
-      <Typography> Domovská stránka </Typography>
-
+    <>
+      {activeSession ? <LoggedInHomeView/> : <NoLoginHomeView/> }
+    </>
   );
 }
 

@@ -1,18 +1,31 @@
-// src/app/layout.tsx
-'use client'
+import type { Metadata } from "next";
+import "./globals.css";
+import NavBar from "@/components/NavBar";
+import AuthProvider from "@/components/AuthProvider";
 
-import { SessionProvider } from "next-auth/react"
+
+export const metadata: Metadata = {
+  title: "SnapZoška",
+  description: "Created by students of SPŠE Zochova 9, Bratislava",
+};
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode
-}) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="en">
+    <html lang="sk">
       <body>
-        <SessionProvider>{children}</SessionProvider>
+      <AuthProvider>
+        <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+        <main style={{flexGrow: 1}}>
+          {children}
+        </main>
+        <NavBar/>
+        </div>
+      </AuthProvider>
       </body>
     </html>
-  )
+  );
 }
