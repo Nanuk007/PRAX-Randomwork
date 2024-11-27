@@ -1,36 +1,15 @@
 // src/app/page.tsx
 
-
-import Typography from "@mui/material/Typography";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 import LoggedInHomeView from "@/sections/HomeViews/LoggedInHomeView";
-import NoLoginHomeView from "@/sections/HomeViews/NoLoginHomeView"
+import NoLoginHomeView from "@/sections/HomeViews/NoLoginHomeView";
 export const metadata = { title: "Domov | ZoškaSnap" };
 
 export default async function Home() {
-  const activeSession = await getServerSession(authOptions)
-  return (
-    <>
-      {activeSession ? <LoggedInHomeView/> : <NoLoginHomeView/> }
-    </>
-  );
+  const activeSession = await getServerSession(authOptions);
+  return <>{activeSession ? <LoggedInHomeView /> : <NoLoginHomeView />}</>;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import HomeIcon from "@mui/icons-material/Home";
 // import SearchIcon from "@mui/icons-material/Search";
@@ -40,26 +19,26 @@ export default async function Home() {
 // import { useState } from "react";
 
 //   const [navValue, setNavValue] = useState(0);
-    // <Container maxWidth="sm" sx={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-    //   <Box component="main" sx={{ flexGrow: 1, paddingTop: 2 }}>
-    //     <Typography variant="h4" gutterBottom>
-    //       Vitajte na SnapZoška!
-    //     </Typography>
-    //     <Typography variant="body1">
-    //       Toto je vaša úvodná stránka. Tu nájdete príspevky od používateľov, pridáte vlastné alebo preskúmate nové príspevky.
-    //     </Typography>
-    //   </Box>
+// <Container maxWidth="sm" sx={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+//   <Box component="main" sx={{ flexGrow: 1, paddingTop: 2 }}>
+//     <Typography variant="h4" gutterBottom>
+//       Vitajte na SnapZoška!
+//     </Typography>
+//     <Typography variant="body1">
+//       Toto je vaša úvodná stránka. Tu nájdete príspevky od používateľov, pridáte vlastné alebo preskúmate nové príspevky.
+//     </Typography>
+//   </Box>
 
-    //   {/* Bottom Navigation */}
-    //   <BottomNavigation
-    //     value={navValue}
-    //     onChange={(event, newValue) => setNavValue(newValue)}
-    //     showLabels
-    //   >
-    //     <BottomNavigationAction label="Domov" icon={<HomeIcon />} />
-    //     <BottomNavigationAction label="Hľadať" icon={<SearchIcon />} />
-    //     <BottomNavigationAction label="Pridať" icon={<AddCircleIcon />} />
-    //     <BottomNavigationAction label="Notifikácie" icon={<NotificationsIcon />} />
-    //     <BottomNavigationAction label="Profil" icon={<AccountCircleIcon />} />
-    //   </BottomNavigation>
-    // </Container>
+//   {/* Bottom Navigation */}
+//   <BottomNavigation
+//     value={navValue}
+//     onChange={(event, newValue) => setNavValue(newValue)}
+//     showLabels
+//   >
+//     <BottomNavigationAction label="Domov" icon={<HomeIcon />} />
+//     <BottomNavigationAction label="Hľadať" icon={<SearchIcon />} />
+//     <BottomNavigationAction label="Pridať" icon={<AddCircleIcon />} />
+//     <BottomNavigationAction label="Notifikácie" icon={<NotificationsIcon />} />
+//     <BottomNavigationAction label="Profil" icon={<AccountCircleIcon />} />
+//   </BottomNavigation>
+// </Container>
