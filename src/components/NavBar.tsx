@@ -12,9 +12,27 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 
+import { useEffect } from "react";
+import { useTheme } from "./ThemeProvider";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import { IconButton } from "@mui/material";
+
 export default function NavBar() {
   const [value, setValue] = React.useState("Domov");
   const { data: session } = useSession();
+
+  const { toggleTheme, isDarkMode } = useTheme();
+
+  const [mounted, setMounted] = React.useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -25,15 +43,50 @@ export default function NavBar() {
     { label: "Domov", value: "Domov", icon: <HomeIcon />, href: "/" },
     ...(session
       ? [
-          { label: "Profil", value: "Profil", icon: <PersonIcon />, href: "/profil" },
-          { label: "Hladat", value: "Hladat", icon: <SearchIcon />, href: "/hladat" },
-          { label: "Odhlasenie", value: "Odhlasenie", icon: <LogoutIcon />, href: "/auth/odhlasenie" },
+          {
+            label: "Profil",
+            value: "Profil",
+            icon: <PersonIcon />,
+            href: "/profil",
+          },
+          {
+            label: "Hladat",
+            value: "Hladat",
+            icon: <SearchIcon />,
+            href: "/hladat",
+          },
+          {
+            label: "Odhlasenie",
+            value: "Odhlasenie",
+            icon: <LogoutIcon />,
+            href: "/auth/odhlasenie",
+          },
         ]
       : [
-          { label: "O nas", value: "O nas", icon: <PersonIcon />, href: "/o-nas" },
-          { label: "GDPR", value: "GDPR", icon: <PostAddIcon />, href: "/gdpr" },
-          { label: "Prihlásenie", value: "Prihlasenie", icon: <LoginIcon />, href: "/auth/prihlasenie" },
-          { label: "Registrácia", value: "Registracia", icon: <LoginIcon />, href: "/auth/prihlasenie" },
+          {
+            label: "O nas",
+            value: "O nas",
+            icon: <PersonIcon />,
+            href: "/o-nas",
+          },
+          {
+            label: "GDPR",
+            value: "GDPR",
+            icon: <PostAddIcon />,
+            href: "/gdpr",
+          },
+          {
+            label: "Prihlásenie",
+            value: "Prihlasenie",
+            icon: <LoginIcon />,
+            href: "/auth/prihlasenie",
+          },
+          {
+            label: "Registrácia",
+            value: "Registracia",
+            icon: <LoginIcon />,
+            href: "/auth/prihlasenie",
+          },
         ]),
   ];
 
@@ -59,7 +112,12 @@ export default function NavBar() {
           href={item.href}
         />
       ))}
+      <IconButton
+        onClick={toggleTheme}
+        sx={{ color: (theme) => theme.palette.text.primary, ml: 2 }}
+      >
+        {isDarkMode ? <DarkModeIcon /> : <LightModeIcon />}
+      </IconButton>
     </BottomNavigation>
   );
 }
-
