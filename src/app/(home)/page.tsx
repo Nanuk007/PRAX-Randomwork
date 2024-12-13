@@ -2,13 +2,16 @@
 
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/authOptions";
-import LoggedInHomeView from "@/sections/HomeViews/LoggedInHomeView";
+import {redirect} from "next/navigation";
 import NoLoginHomeView from "@/sections/HomeViews/NoLoginHomeView";
 export const metadata = { title: "Domov | ZoškaSnap" };
 
 export default async function Home() {
   const activeSession = await getServerSession(authOptions);
-  return <>{activeSession ? <LoggedInHomeView /> : <NoLoginHomeView />}</>;
+  if (activeSession) {
+    redirect("/prispevok")
+  }
+  return <>{<NoLoginHomeView />}</>;
 }
 
 // import HomeIcon from "@mui/icons-material/Home";
