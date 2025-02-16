@@ -1,12 +1,25 @@
-// src/components/prihlasenie/PrihlasenieButton.tsx
 "use client";
 import { signIn } from "next-auth/react";
 import { Button } from "@mui/material";
 import { Google as GoogleIcon } from "@mui/icons-material";
-export default function PrihlasenieButton() {
-  const handleGoogleSignIn = () => {
+
+export default function PrihlasenieButton({ 
+  text, 
+  onClick 
+}: { 
+  text: string;
+  onClick?: (e: React.MouseEvent) => boolean | void;
+}) {
+  const handleGoogleSignIn = (e: React.MouseEvent) => {
+    if (onClick) {
+      const shouldProceed = onClick(e);
+      if (shouldProceed === false) {
+        return;
+      }
+    }
     signIn("google", { callbackUrl: "/" });
   };
+
   return (
     <Button
       fullWidth
@@ -23,7 +36,7 @@ export default function PrihlasenieButton() {
         textTransform: "none",
       }}
     >
-      Prihlásiť sa cez Google
+      {text} sa cez Google
     </Button>
   );
 }

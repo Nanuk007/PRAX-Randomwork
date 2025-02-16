@@ -86,11 +86,7 @@ export default function NavBar() {
             icon: <PersonIcon />,
             href: "/o-nas",
           },
-          {
-            label: "GDPR",
-            icon: <SecurityIcon />,
-            href: "/GDPR",
-          },
+        
           {
             label: "Registracia",
             icon: <LoginIcon />,
