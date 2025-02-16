@@ -15,7 +15,7 @@ import {
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import Link from 'next/link'
-import DiscordIcon from './prihlasenie/DiscordIcon'
+
 
 interface LogoutModalProps {
   open: boolean
@@ -45,19 +45,10 @@ const GoogleButton = styled(StyledButton)({
   '&:hover': { backgroundColor: '#357ae8' },
 })
 
-const DiscordButton = styled(StyledButton)({
-  backgroundColor: '#852eff',
-  color: '#fff',
-  '&:hover': { backgroundColor: '#6a1ed4' },
-})
 
 export default function LogoutModal({ open, onClose }: LogoutModalProps) {
   const handleGoogleSignIn = () => {
     signIn('google', { callbackUrl: '/' })
-  }
-
-  const handleDiscordSignIn = () => {
-    signIn('discord', { callbackUrl: '/' })
   }
 
   return (
@@ -75,14 +66,7 @@ export default function LogoutModal({ open, onClose }: LogoutModalProps) {
           >
             Registrovať sa cez Google
           </GoogleButton>
-          <DiscordButton
-            fullWidth
-            variant="contained"
-            onClick={handleDiscordSignIn}
-            startIcon={<DiscordIcon />}
-          >
-            Registovať sa cez Discord
-          </DiscordButton>
+          
         </Stack>
       </DialogContent>
       <Typography
