@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useTransition } from "react";
-import debounce from "lodash/debounce";
+import { debounce } from 'lodash';
 import { Container, List, TextField, Typography } from "@mui/material";
 import ProfileListSkeleton from "./components/ProfileSkeletonLoader";
 import SearchCard from "./components/SearchCard";

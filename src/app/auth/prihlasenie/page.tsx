@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { Container, Typography, Box, Paper, Button } from "@mui/material";
 import PrihlasenieButton from "@/components/prihlasenie/PrihlasenieButton";
-import PrihlasenieDiscordButton from "@/components/prihlasenie/PrihlasenieDiscordButton";
 import LoginModal from "@/components/LoginModal";
 
 

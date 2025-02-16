@@ -1,11 +1,6 @@
 "use client";
 
 import { Box, Container, Typography, useMediaQuery, useTheme } from "@mui/material";
-import Image from "next/image";
-
-import logo from "@/public/_images/logoBig.png";
-import whiteLogo from "@/public/_images/whiteLogo.png";
-
 import Prihlasenie from "@/app/auth/prihlasenie/page";
 
 const HomePage = () => {
