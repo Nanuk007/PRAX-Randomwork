@@ -1,9 +1,11 @@
-import { Guard } from "@/components/Guard";
+// src/app/(private)/layout.tsx
 
-export default function PrivateLayout({ children }: { children: React.ReactNode; }) {
-    return (
-        <Guard>
-            {children}
-        </Guard>
-    );
+import SessionValidator from "@/components/SessionValidator";
+
+export default function PrivateLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return <SessionValidator>{children}</SessionValidator>;
 }

@@ -21,19 +21,15 @@ const lightTheme = createTheme({
   ...baseTheme,
   palette: {
     mode: "light",
-    primary: { main: "#6200ea" }, // Purple (vibrant yet calming)
-    secondary: { main: "#03a9f4" }, // Light Blue (fresh and vibrant)
+    primary: { main: "#dc004e" }, // Red
+    secondary: { main: "#1976d2" }, // Blue
     background: {
-      default: "#f4f6f8", // Soft light gray (gentle on the eyes)
-      paper: "#ffffff", // White (classic and clean)
+      default: "#ffffff", // Light gray
+      paper: "#ffffff", // White
     },
     text: {
-      primary: "#212121", // Dark Gray (softer than pure black)
-      secondary: "#616161", // Medium Gray (for secondary text)
-    },
-    action: {
-      active: "#6200ea", // Keeping action colors consistent with the primary theme
-      hover: "#03a9f4",
+      primary: "#000000", // Black text in light mode
+      secondary: "#222", // Gray for secondary text
     },
   },
 });
@@ -43,7 +39,7 @@ const darkTheme = createTheme({
   ...baseTheme,
   palette: {
     mode: "dark",
-    primary: { main: "#f44336" }, // Darker
+    primary: { main: "#f44336" }, // Darker red
     secondary: { main: "#2196f3" }, // Lighter blue
     background: {
       default: "#000", // Dark background
