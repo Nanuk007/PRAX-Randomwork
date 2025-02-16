@@ -22,7 +22,6 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import SearchIcon from "@mui/icons-material/Search";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
-import SecurityIcon from "@mui/icons-material/Security";
 import { useTheme } from "@/components/providers/ThemeProvider";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
