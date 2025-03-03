@@ -3,24 +3,10 @@
 import { prisma } from "@/app/api/auth/[...nextauth]/prisma";
 
 export async function searchProfiles(query: string) {
+    // Modified to return all profiles when query is empty or less than 3 characters
     try {
-        if (!query) {
-            return await prisma.profile.findMany({
-                select: {
-                    id: true,
-                    avatarUrl: true,
-                    bio: true,
-                    user: {
-                        select: {
-                            name: true
-                        }
-                    }
-                }
-            });
-        }
-
         const profiles = await prisma.profile.findMany({
-            where: {
+            where: query && query.length >= 3 ? {
                 OR: [
                     {
                         user: {
@@ -31,7 +17,7 @@ export async function searchProfiles(query: string) {
                         }
                     }
                 ]
-            },
+            } : {},
             select: {
                 id: true,
                 avatarUrl: true,

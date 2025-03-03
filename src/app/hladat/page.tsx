@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useTransition } from "react";
+import { useState, useCallback, useTransition, useEffect } from "react";
 import { debounce } from 'lodash';
 import { Container, List, TextField, Typography } from "@mui/material";
 import ProfileListSkeleton from "./components/ProfileSkeletonLoader";
@@ -38,6 +38,10 @@ export default function OptimizedInstagramStyleSearch() {
     }, 300),
     []
   );
+
+  useEffect(() => {
+    debouncedSearch("");
+  }, [debouncedSearch]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
