@@ -27,13 +27,9 @@ export default function OptimizedInstagramStyleSearch() {
     debounce((value: string) => {
       startTransition(async () => {
         try {
-          if (value.length >= 3) {
-            const results = await searchProfiles(value);
-            setSearchResults(results);
-            setError(null);
-          } else {
-            setSearchResults([]);
-          }
+          const results = await searchProfiles(value);
+          setSearchResults(results);
+          setError(null);
         } catch (err) {
           setError("Nastala chyba pri vyhľadávaní");
           setSearchResults([]);
@@ -66,9 +62,7 @@ export default function OptimizedInstagramStyleSearch() {
         onChange={handleSearchChange}
         sx={{ mb: 3 }}
       />
-      {search.length < 3 ? (
-        <Typography>Zadajte aspoň 3 znaky pre vyhľadávanie</Typography>
-      ) : isPending ? (
+      {isPending ? (
         <ProfileListSkeleton />
       ) : searchResults.length === 0 ? (
         <Typography>Žiadne výsledky</Typography>

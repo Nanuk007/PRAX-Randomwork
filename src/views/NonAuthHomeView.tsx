@@ -25,7 +25,7 @@ const HomePage = () => {
             p: 2,
           }}
         >
-          <Typography variant="h1" component="h1" gutterBottom> Hello </Typography>
+          <Typography variant="h1" component="h1" gutterBottom> Vitajte </Typography>
         </Box>
         <Box
           sx={{
