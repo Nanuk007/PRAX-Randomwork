@@ -33,6 +33,8 @@ POSTGRES_PASSWORD=f6xUh7YnPuSa
 POSTGRES_DATABASE=neondb
 POSTGRES_URL_NO_SSL=postgres://neondb_owner:f6xUh7YnPuSa@ep-dawn-king-a2w8iads-pooler.eu-central-1.aws.neon.tech/neondb
 POSTGRES_PRISMA_URL=postgres://neondb_owner:f6xUh7YnPuSa@ep-dawn-king-a2w8iads-pooler.eu-central-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=15
+
+BLOB_READ_WRITE_TOKEN="vercel_blob_rw_qGxas57VgQu4QIjx_KFiYwdaUPirBzGKxLgML8Dm3TPWck8"
 ```
 
 
