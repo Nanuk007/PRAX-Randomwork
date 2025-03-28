@@ -12,50 +12,27 @@ import {
   FormControlLabel,
   Snackbar,
   Alert,
+  Card,
+  CardContent,
+  
 } from "@mui/material"
-import PrihlasenieButton from "@/components/prihlasenie/PrihlasenieButton"
 
+import AuthButtons from "@/components/prihlasenie/AuthButtons"
 import MuiLink from "@mui/material/Link"
 import Link from "next/link"
 
+
 export default function Prihlasenie() {
-  const [open, setOpen] = useState(false)
   const [termsAccepted, setTermsAccepted] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
-
+  const [open, setOpen] = useState(false)
+  
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
   const handleAlertClose = () => setShowAlert(false)
-
+  
   const handleTermsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTermsAccepted(event.target.checked)
-  }
-
-  const AuthButtons = ({
-    text,
-    checkTerms,
-    termsAccepted,
-  }: {
-    text: string
-    checkTerms?: boolean
-    termsAccepted?: boolean
-  }) => {
-    const handleClick = (e: React.MouseEvent) => {
-      if (checkTerms && !termsAccepted) {
-        e.preventDefault()
-        setShowAlert(true)
-        return false
-      }
-    }
-
-    return (
-      <>
-        <Box sx={{ width: "100%" }}>
-          <PrihlasenieButton text={text} onClick={handleClick}/>
-        </Box>
-      
-      </>
-    )
   }
 
   return (
@@ -142,7 +119,7 @@ export default function Prihlasenie() {
           <Typography id="modal-modal-title" variant="h6" component="h2" gutterBottom>
             Prihlásenie
           </Typography>
-          <AuthButtons text="meow" />
+          <AuthButtons text="Prihlásiť" />
         </Box>
       </Modal>
 

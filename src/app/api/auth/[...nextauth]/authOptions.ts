@@ -2,11 +2,10 @@
 
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import GithubProvider from "next-auth/providers/github";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { prisma } from "./prisma";
-import DiscordProvider from "next-auth/providers/discord";
+import TwitterProvider from "next-auth/providers/twitter";
 
+import { prisma } from "./prisma";
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -14,13 +13,10 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
     }),
-    DiscordProvider({
-      clientId: process.env.DISCORD_CLIENT_ID || "",
-      clientSecret: process.env.DISCORD_CLIENT_SECRET || "",
-    }),
-    GithubProvider({
-      clientId: process.env.GITHUB_ID || "",
-      clientSecret: process.env.GITHUB_SECRET || "",
+    TwitterProvider({
+      clientId: process.env.TWITTER_CLIENT_ID || "",
+      clientSecret: process.env.TWITTER_CLIENT_SECRET || "",
+      version: "2.0",
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
@@ -30,9 +26,14 @@ export const authOptions: NextAuthOptions = {
     signOut: "/auth/odhlasenie",
   },
   callbacks: {
-    async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
-      // Redirect to home page after sign-in
-      return baseUrl || url; // baseUrl is automatically set from NEXTAUTH_URL in .env
+    async session({ session, user }) {
+      if (session?.user) {
+        session.user.id = user.id;
+      }
+      return session;
+    },
+    async redirect({ url, baseUrl }) {
+      return baseUrl || url;
     },
   },
 };

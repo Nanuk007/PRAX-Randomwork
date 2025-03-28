@@ -1,8 +1,8 @@
-import NextAuth from "next-auth"
-import { authOptions } from "./authOptions"
+// src/app/api/auth/[...nextauth]/route.ts
 
-const handler = NextAuth(authOptions)
+import NextAuth from "next-auth";
+import { authOptions } from "./authOptions";
 
-export { handler as GET, handler as POST }
+const handler = NextAuth(authOptions);
 
-
+export { handler as GET, handler as POST };

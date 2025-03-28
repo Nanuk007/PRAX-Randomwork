@@ -1,44 +1,36 @@
 "use client";
 
+import { createContext, useContext, useEffect, useState } from "react";
 import { ThemeProvider as MUIThemeProvider } from "@mui/material/styles";
-
 import CssBaseline from "@mui/material/CssBaseline";
-
-import { useEffect, useState } from "react";
-
-import { useContext, createContext } from "react";
-
 import { lightTheme, darkTheme } from "@/app/styles/theme";
 
-const ThemeContext = createContext({
-  toggleTheme: () => {},
-  isDarkMode: false,
-});
+type ThemeContextType = {
+  toggleTheme: () => void;
+  isDarkMode: boolean;
+};
 
-export const useTheme = () => useContext(ThemeContext);
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (context === undefined) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
+  return context;
+};
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [mounted, setIsMounted] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
     setIsDarkMode(window.matchMedia("(prefers-color-scheme: dark)").matches);
-    setIsMounted(true);
   }, []);
 
-  if (!mounted) {
-    return null;
-  }
+  const toggleTheme = () => setIsDarkMode((prevMode) => !prevMode);
 
   return (
-    <ThemeContext.Provider
-      value={{
-        toggleTheme: () => {
-          setIsDarkMode((prevState) => !prevState);
-        },
-        isDarkMode,
-      }}
-    >
+    <ThemeContext.Provider value={{ toggleTheme, isDarkMode }}>
       <MUIThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
         <CssBaseline />
         {children}

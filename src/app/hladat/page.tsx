@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useCallback, useTransition, useEffect } from "react";
-import { debounce } from 'lodash';
+import { useState, useCallback } from "react";
+import { useAPICall } from "@/hooks/useApiCall";
+import debounce from "lodash/debounce";
 import { Container, List, TextField, Typography } from "@mui/material";
 import ProfileListSkeleton from "./components/ProfileSkeletonLoader";
 import SearchCard from "./components/SearchCard";
-import { searchProfiles } from "./actions";
 
 interface Profile {
   id: string;
@@ -18,39 +18,46 @@ interface Profile {
 
 export default function OptimizedInstagramStyleSearch() {
   const [search, setSearch] = useState("");
-  const [searchResults, setSearchResults] = useState<Profile[]>([]);
-  const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | null>(null);
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+
+  const {
+    data: dataJson,
+    isLoading,
+    isError,
+  } = useAPICall(
+    ["profiles", debouncedSearch],
+    async () => {
+      if (!debouncedSearch || debouncedSearch.length < 3) return [];
+      const response = await fetch(
+        `/api/profile/${encodeURIComponent(debouncedSearch)}`
+      );
+
+      if (!response.ok) {
+        throw new Error("Nastala chyba pri nacitavani dát");
+      }
+      return response.json();
+    },
+    {
+      enabled: debouncedSearch.length >= 3,
+    }
+  );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedSearch = useCallback(
+  const debouncedSetSearch = useCallback(
     debounce((value: string) => {
-      startTransition(async () => {
-        try {
-          const results = await searchProfiles(value);
-          setSearchResults(results);
-          setError(null);
-        } catch (err) {
-          setError("Nastala chyba pri vyhľadávaní");
-          setSearchResults([]);
-        }
-      });
+      setDebouncedSearch(value);
     }, 300),
     []
   );
 
-  useEffect(() => {
-    debouncedSearch("");
-  }, [debouncedSearch]);
-
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearch(value);
-    debouncedSearch(value);
+    debouncedSetSearch(value);
   };
 
-  if (error) {
-    return <Typography color="error">{error}</Typography>;
+  if (isError) {
+    return <Typography color="error">Nastala necakana chyba</Typography>;
   }
 
   return (
@@ -66,13 +73,15 @@ export default function OptimizedInstagramStyleSearch() {
         onChange={handleSearchChange}
         sx={{ mb: 3 }}
       />
-      {isPending ? (
+      {search.length < 3 ? (
+        <Typography>Zadajte aspoň 3 znaky pre vyhľadávanie</Typography>
+      ) : isLoading ? (
         <ProfileListSkeleton />
-      ) : searchResults.length === 0 ? (
+      ) : dataJson?.length === 0 ? (
         <Typography>Žiadne výsledky</Typography>
       ) : (
         <List sx={{ width: "100%" }}>
-          {searchResults.map((profile: Profile) => (
+          {dataJson?.map((profile: Profile) => (
             <SearchCard key={profile.id} profile={profile} />
           ))}
         </List>

@@ -26,12 +26,13 @@ import { useTheme } from "@/components/providers/ThemeProvider";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import LogoutModal from "./LogoutModal";
+import MobileNavDrawer from "./MobileNavBar";
 import { useEffect } from "react";
-
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 
 export default function NavBar() {
   const [mounted, setMounted] = React.useState(false);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const { toggleTheme, isDarkMode } = useTheme();
   // const isMobile = useMediaQuery((theme: Theme) =>
   //   theme.breakpoints.down("sm")
@@ -45,7 +46,7 @@ export default function NavBar() {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
+  if (!mounted || status === "loading") return null;
 
   const navItems = [
     {
@@ -85,7 +86,6 @@ export default function NavBar() {
             icon: <PersonIcon />,
             href: "/o-nas",
           },
-        
           {
             label: "Registracia",
             icon: <LoginIcon />,
@@ -97,7 +97,7 @@ export default function NavBar() {
   return (
     <>
       {isMobile ? (
-        null
+        <MobileNavDrawer />
       ) : (
         <BottomNavigation
           showLabels
@@ -109,10 +109,19 @@ export default function NavBar() {
             maxWidth: 800,
             minWidth: "40%",
             borderRadius: "16px",
-            backdropFilter: "blur(10px)",
-            backgroundColor: isDarkMode ? "rgba(30, 30, 30, 0.6)" : "rgba(255, 255, 255, 0.6)",
-            boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)",
+            backdropFilter: "blur(16px)",
+            backgroundColor: isDarkMode ? "rgba(30, 30, 30, 0.75)" : "rgba(255, 255, 255, 0.85)",
+            boxShadow: isDarkMode 
+              ? "0 8px 32px rgba(0, 0, 0, 0.4), inset 0 0 0 0.5px rgba(255, 255, 255, 0.1)"
+              : "0 8px 32px rgba(0, 0, 0, 0.1), inset 0 0 0 0.5px rgba(0, 0, 0, 0.05)",
             zIndex: 1000,
+            transition: "all 0.3s ease-in-out",
+            overflow: "hidden",
+            '&:hover': {
+              boxShadow: isDarkMode
+                ? "0 12px 40px rgba(0, 0, 0, 0.5), inset 0 0 0 0.5px rgba(255, 255, 255, 0.2)"
+                : "0 12px 40px rgba(0, 0, 0, 0.15), inset 0 0 0 0.5px rgba(0, 0, 0, 0.1)"
+            }
           }}
         >
           {navItems.map((item, index) => (
@@ -124,7 +133,27 @@ export default function NavBar() {
               href={item.href}
               onClick={item.onClick}
               sx={{
-                "&:hover": { transform: "scale(1.05)" },
+                color: isDarkMode ? 'rgba(255, 255, 255, 0.85)' : 'rgba(0, 0, 0, 0.85)',
+                transition: 'all 0.2s ease-in-out',
+                '&:hover': { 
+                  transform: 'scale(1.05)',
+                  color: isDarkMode ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)'
+                },
+                '& .MuiBottomNavigationAction-label': {
+                  fontWeight: 500,
+                  fontSize: '0.875rem',
+                  transition: 'all 0.2s ease-in-out'
+                },
+                '&.Mui-selected': {
+                  color: isDarkMode ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)',
+                  '& .MuiBottomNavigationAction-label': {
+                    fontSize: '0.875rem',
+                    fontWeight: 600
+                  }
+                },
+                '& .MuiTouchRipple-root': {
+                  borderRadius: '16px',
+                }
               }}
             />
           ))}
@@ -135,6 +164,23 @@ export default function NavBar() {
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
+        sx={{
+          mt: -2,
+          '& .MuiPaper-root': {
+            borderRadius: '8px',
+            backdropFilter: 'blur(16px)',
+            backgroundColor: isDarkMode ? 'rgba(30, 30, 30, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+            boxShadow: isDarkMode 
+              ? '0 8px 32px rgba(0, 0, 0, 0.4), inset 0 0 0 0.5px rgba(255, 255, 255, 0.1)'
+              : '0 8px 32px rgba(0, 0, 0, 0.1), inset 0 0 0 0.5px rgba(0, 0, 0, 0.05)'
+          },
+          '& .MuiMenuItem-root': {
+            transition: 'all 0.2s ease-in-out',
+            '&:hover': {
+              backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)'
+            }
+          }
+        }}
         anchorOrigin={{
           vertical: "top",
           horizontal:"center"
@@ -148,6 +194,10 @@ export default function NavBar() {
         <MenuItem component={Link} href="/profil" onClick={() => setAnchorEl(null)}>
           <ListItemIcon><PersonIcon fontSize="small" /></ListItemIcon>
           <ListItemText>Profil</ListItemText>
+        </MenuItem>
+        <MenuItem component={Link} href="/ulozene" onClick={() => setAnchorEl(null)}>
+          <ListItemIcon><BookmarkIcon fontSize="small" /></ListItemIcon>
+          <ListItemText>Uložené príspevky</ListItemText>
         </MenuItem>
         <MenuItem onClick={toggleTheme}>
           <ListItemIcon>
